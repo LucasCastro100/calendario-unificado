@@ -1,0 +1,66 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    "AGENTS.md",
+    ".opencode/language.md",
+    ".opencode/skills/memoria-sistema/SKILL.md"
+  ],
+  "skills": {
+    "paths": [".opencode/skills"]
+  },
+  "agent": {
+    "agent-security": {
+      "description": "Security auditor cross-stack. Use para auditorias de segurança, análise de vulnerabilidade, vazamento de token OAuth, IDOR, XSS, CSRF e validação de input. Read-only.",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "bash": "ask",
+        "edit": "deny"
+      }
+    },
+    "agent-backend": {
+      "description": "Laravel API specialist. Use para implementar ou revisar código PHP — DTOs, Services com Adapter/Strategy, Http::pool, Sanctum, Socialite, Google API, Microsoft Graph, FormRequests, Policies e migrations.",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "bash": "ask",
+        "edit": "allow"
+      }
+    },
+    "agent-frontend": {
+      "description": "Next.js e UI specialist. Use para implementar ou revisar componentes React, App Router, Server vs Client Components, TanStack Query, validação Zod, Shadcn/UI, Tailwind e visualização de calendário.",
+      "mode": "subagent",
+      "model": "anthropic/claude-sonnet-4-6",
+      "permission": {
+        "read": "allow",
+        "glob": "allow",
+        "grep": "allow",
+        "bash": "ask",
+        "edit": "allow"
+      }
+    }
+  },
+  "permission": {
+    "bash": {
+      "php *": "allow",
+      "php artisan *": "allow",
+      "composer *": "ask",
+      "vendor/bin/pint *": "allow",
+      "vendor/bin/phpstan *": "allow",
+      "pnpm *": "allow",
+      "npx *": "ask",
+      "git *": "allow",
+      "grep *": "allow",
+      "rg *": "allow",
+      "find *": "allow",
+      "ls *": "allow",
+      "cat *": "allow"
+    }
+  }
+}

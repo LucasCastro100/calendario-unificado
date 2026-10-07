@@ -1,0 +1,29 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+        - routes
+        - database/migrations
+        - bootstrap/app.php
+
+    # Nível 5 cobre tipos, retornos, null-safety e argumentos. Sobe a qualidade
+    # sem exigir tipagem genérica exaustiva que o Laravel não pratica.
+    level: 5
+
+    # Sem o autoloader, o Larastan não resolve os models e cai no tipo genérico
+    # `mixed`/`string` do Model — daí o Symfony aparecer como "string" onde o
+    # código usa um enum. O bootstrap é obrigatório para a análise de casts.
+    bootstrapFiles:
+        - vendor/autoload.php
+
+    reportUnmatchedIgnoredErrors: false
+    treatPhpDocTypesAsCertain: false
+
+    # O Larastan lê casts de duas formas: por `getCasts()` em runtime, ou
+    # avaliando estaticamente o método `casts()`. A segunda é o que resolve
+    # `provider` (enum) e as colunas de data — sem ela o PHPStan trata toda
+    # propriedade de model como `mixed`/`string` e reporta `method.nonObject`
+    # em código correto.
+    parseModelCastsMethod: true
